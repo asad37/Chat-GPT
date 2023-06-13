@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tic_toe_game/forget_password.dart';
 import 'package:tic_toe_game/siana_screen.dart';
 import 'package:tic_toe_game/sign_up.dart';
@@ -12,6 +13,12 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  User? user;
+  @override
+  void initState() {
+    super.initState();
+    user=FirebaseAuth.instance.currentUser;
+  }
   TextEditingController emailContrller = TextEditingController();
   TextEditingController passwordContrller = TextEditingController();
   @override
@@ -141,14 +148,17 @@ class _LoginFormState extends State<LoginForm> {
                       try {
                         var user = await FirebaseAuth.instance
                             .signInWithEmailAndPassword(
-                                email: email, password: password)
-                            .then((value) {
+                                email: email, password: password);  
+                        if(user.user!=null){
+                          user.user?.uid;   
+                           SharedPreferences? sharedPreferences = await SharedPreferences.getInstance();
+                            await sharedPreferences.setString('uid', user.user?.uid??"");
+                            await sharedPreferences.setString('email', user.user?.email??"");
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SianaScreen()));
-                        });
-                        var snackbar = SnackBar(
+                           var snackbar = SnackBar(
                           content: Text(
                             "Login Successfully",
                             style: TextStyle(
@@ -160,6 +170,9 @@ class _LoginFormState extends State<LoginForm> {
                           backgroundColor: Colors.grey,
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        }
+                        
+                       
                       }on FirebaseAuthException catch (e) {
                         var snackbar = SnackBar(
                           content: Text(

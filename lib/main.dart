@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tic_toe_game/siana_screen.dart';
 import 'package:tic_toe_game/splash_screen.dart';
 
 import 'firebase_options.dart';
@@ -20,10 +22,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  User? user;
   @override
-  void initState() {
-    
+  void initState() {  
     super.initState();
+    user=FirebaseAuth.instance.currentUser;
   }
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,6 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashScreen());
+        home: user != null ? const SianaScreen() :const SplashScreen());
   }
 }
