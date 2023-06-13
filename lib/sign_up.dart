@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tic_toe_game/Login_form.dart';
@@ -113,6 +114,7 @@ class _SignUpState extends State<SignUp> {
                   height: 13,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: phoneController,
                   decoration: const InputDecoration(
                       labelText: 'Phone',
@@ -129,6 +131,7 @@ class _SignUpState extends State<SignUp> {
                   height: 13,
                 ),
                 TextFormField(
+                  keyboardType:TextInputType.emailAddress,
                   controller: emailController,
                   decoration: const InputDecoration(
                       labelText: 'Email',
@@ -145,6 +148,7 @@ class _SignUpState extends State<SignUp> {
                   height: 13,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
@@ -173,6 +177,7 @@ class _SignUpState extends State<SignUp> {
                       var password = passwordController.text.trim();
                       var phone = phoneController.text.trim();
                       var username = userController.text.trim();
+                      User? user=FirebaseAuth.instance.currentUser;
                       try {
                        await  FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
@@ -195,7 +200,12 @@ class _SignUpState extends State<SignUp> {
                           backgroundColor: Colors.grey,
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                        
+                       await FirebaseFirestore.instance.collection("Chat GPT").doc(user?.uid).set({
+                              'Username':username,
+                              'Phone':phone,
+                              'Email':email,
+                              'Password':password
+                       }) ;
                       } on FirebaseAuthException catch (e) {
                         print(e);
                         var snackbar = SnackBar(

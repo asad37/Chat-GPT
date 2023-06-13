@@ -14,11 +14,12 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   User? user;
+  LoginForm(String username){}
   @override
-  void initState() {
-    super.initState();
-    user=FirebaseAuth.instance.currentUser;
-  }
+  // void initState() {
+  //   super.initState();
+  //   user=FirebaseAuth.instance.currentUser;
+  // }
   TextEditingController emailContrller = TextEditingController();
   TextEditingController passwordContrller = TextEditingController();
   @override
@@ -109,6 +110,7 @@ class _LoginFormState extends State<LoginForm> {
                       labelStyle:
                           TextStyle(color: Color.fromARGB(255, 48, 115, 170)),
                       labelText: 'Email',
+                      prefixIcon: Icon(Icons.email),
                       contentPadding: EdgeInsets.all(8),
                       enabledBorder: OutlineInputBorder(
                           borderSide:
@@ -119,12 +121,15 @@ class _LoginFormState extends State<LoginForm> {
                   height: 13,
                 ),
                 TextFormField(
+                  obscureText: true,
                   controller: passwordContrller,
                   decoration: const InputDecoration(
                       labelText: 'Password',
+                      prefixIcon: Icon(Icons.password),
+                      suffixIcon: Icon(Icons.visibility),
                       labelStyle:
                           TextStyle(color: Color.fromARGB(255, 48, 115, 170)),
-                      contentPadding: EdgeInsets.all(15),
+                      contentPadding: EdgeInsets.all(8),
                       enabledBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.blue, width: 2.5),

@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:tic_toe_game/GPTModel.dart';
+
+import 'Login_form.dart';
 
 class SianaScreen extends StatefulWidget {
   const SianaScreen({super.key});
@@ -11,11 +14,14 @@ class SianaScreen extends StatefulWidget {
 }
 
 class _SianaScreenState extends State<SianaScreen> {
+  
   var msg = "";
   TextEditingController textController = TextEditingController();
   bool isLoading = false;
+  User? user=FirebaseAuth.instance.currentUser;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green.shade50,
@@ -27,6 +33,12 @@ class _SianaScreenState extends State<SianaScreen> {
             backgroundImage: AssetImage('assets/asad.jpeg'),
           ),
         ),
+        title: GestureDetector(
+          onTap: ()  { 
+            FirebaseAuth.instance.signOut().then((value) {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginForm()));
+          });},
+          child: Icon(Icons.logout)),
         actions: [
           Container(
             decoration: BoxDecoration(
@@ -35,7 +47,7 @@ class _SianaScreenState extends State<SianaScreen> {
                 borderRadius: const BorderRadius.all(Radius.circular(30))),
             padding: const EdgeInsets.fromLTRB(15, 3, 15, 3),
             margin: const EdgeInsets.only(right: 10),
-            child: const Text("Username"),
+            child:  Text(user?.email??""),
           )
         ],
         automaticallyImplyLeading: false,
@@ -147,7 +159,7 @@ class _SianaScreenState extends State<SianaScreen> {
     request.body = json.encode({
       "model": "text-davinci-003",
       "prompt": prompt,
-      "max_tokens": 200,
+      "max_tokens": 800,
       "temperature": 0
     });
     request.headers.addAll(headers);
