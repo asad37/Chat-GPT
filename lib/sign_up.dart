@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tic_toe_game/Login_form.dart';
 
@@ -9,6 +10,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController userController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,52 +97,66 @@ class _SignUpState extends State<SignUp> {
                   height: 50,
                 ),
                 TextFormField(
+                  controller: userController,
                   decoration: const InputDecoration(
                       labelStyle:
                           TextStyle(color: Color.fromARGB(255, 48, 115, 170)),
-                      labelText: 'Gender',
+                      labelText: 'Username',
+                      prefixIcon: Icon(Icons.verified_user),
                       contentPadding: EdgeInsets.all(8),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue, width: 2.5),
+                          borderSide:
+                              BorderSide(color: Colors.blue, width: 2.5),
                           borderRadius: BorderRadius.all(Radius.circular(50)))),
                 ),
                 const SizedBox(
                   height: 13,
                 ),
                 TextFormField(
+                  controller: phoneController,
                   decoration: const InputDecoration(
-                      labelText: 'Race',
-                       labelStyle:
+                      labelText: 'Phone',
+                      prefixIcon: Icon(Icons.phone),
+                      labelStyle:
                           TextStyle(color: Color.fromARGB(255, 48, 115, 170)),
                       contentPadding: EdgeInsets.all(8),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue, width: 2.5),
+                          borderSide:
+                              BorderSide(color: Colors.blue, width: 2.5),
                           borderRadius: BorderRadius.all(Radius.circular(50)))),
                 ),
                 const SizedBox(
                   height: 13,
                 ),
                 TextFormField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: Icon(Icons.email),
+                      labelStyle:
+                          TextStyle(color: Color.fromARGB(255, 48, 115, 170)),
+                      contentPadding: EdgeInsets.all(8),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.blue, width: 2.5),
+                          borderRadius: BorderRadius.all(Radius.circular(50)))),
+                ),
+                const SizedBox(
+                  height: 13,
+                ),
+                TextFormField(
+                  controller: passwordController,
+                  obscureText: true,
                   decoration: const InputDecoration(
                       labelText: 'Password',
-                       labelStyle:
+                      suffixIcon: Icon(Icons.visibility),
+                      prefixIcon: Icon(Icons.password),
+                      labelStyle:
                           TextStyle(color: Color.fromARGB(255, 48, 115, 170)),
                       contentPadding: EdgeInsets.all(8),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue, width: 2.5),
-                          borderRadius: BorderRadius.all(Radius.circular(50)))),
-                ),
-                const SizedBox(
-                  height: 13,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                      labelText: 'Verify Password',
-                       labelStyle:
-                          TextStyle(color: Color.fromARGB(255, 48, 115, 170)),
-                      contentPadding: EdgeInsets.all(8),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue, width: 2.5),
+                          borderSide:
+                              BorderSide(color: Colors.blue, width: 2.5),
                           borderRadius: BorderRadius.all(Radius.circular(50)))),
                 ),
                 const SizedBox(
@@ -148,8 +167,50 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.fromLTRB(50, 15, 50, 15),
                         backgroundColor: Colors.green.shade50,
                         side: const BorderSide(color: Colors.blue, width: 2.5)),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginForm()));
+                    onPressed: () async {
+                     
+                      var email = emailController.text.trim();
+                      var password = passwordController.text.trim();
+                      var phone = phoneController.text.trim();
+                      var username = userController.text.trim();
+                      try {
+                       await  FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                                email: email, password: password);
+                            
+                               Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginForm()));
+                          print("User Authenticate");
+                           var snackbar = SnackBar(
+                          content: Text(
+                            "Sign Up Successfully",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          ),
+                          shape: StadiumBorder(),
+                          backgroundColor: Colors.grey,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        
+                      } on FirebaseAuthException catch (e) {
+                        print(e);
+                        var snackbar = SnackBar(
+                          content: Text(
+                            "${e.message}",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red),
+                          ),
+                          shape: StadiumBorder(),
+                          backgroundColor: Colors.green,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                      }
                     },
                     child: const Text(
                       "Sign Up",
