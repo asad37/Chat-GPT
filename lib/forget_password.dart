@@ -107,30 +107,45 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           borderRadius: BorderRadius.all(Radius.circular(50)))),
                 ),
                 const SizedBox(
-                  height: 13,
+                  height: 20,
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                        padding: EdgeInsets.fromLTRB(25, 7, 25, 7),
                         backgroundColor: Colors.green.shade50,
                         side: BorderSide(color: Colors.blue, width: 2.5)),
                     onPressed: () async {
-                      var email = emailContrller.text.trim();
+                      try {
+                        var email = emailContrller.text.trim();
 
-                      await FirebaseAuth.instance
-                          .sendPasswordResetEmail(email: email)
-                          .then((value) {
-                            print("Email Send Successfully");
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginForm()));
-                      });
+                        await FirebaseAuth.instance
+                            .sendPasswordResetEmail(email: email)
+                            .then((value) {
+                          print("Email Send Successfully");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginForm()));
+                        });
+                      } on FirebaseAuthException catch (e) {
+                        SnackBar snackBar = SnackBar(
+                          content: Text(
+                            "${e.message}",
+                            style: TextStyle(
+                                fontFamily: 'Fira Sans',
+                                fontSize: 18,
+                                color: Colors.red),
+                          ),
+                          shape: StadiumBorder(),
+                          backgroundColor: Colors.green,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
                     child: const Text(
                       "Send Password",
                       style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 27,
                           fontFamily: 'Fira Sans',
                           color: Color.fromARGB(255, 10, 98, 169)),
                     )),

@@ -143,7 +143,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                        padding: EdgeInsets.fromLTRB(103, 3, 103,3 ),
                         backgroundColor: Colors.green.shade50,
                         side: BorderSide(color: Colors.blue, width: 2.5)),
                     onPressed: () async {
@@ -200,21 +200,30 @@ class _LoginFormState extends State<LoginForm> {
                           fontFamily: 'Fira Sans',
                           color: Color.fromARGB(255, 10, 98, 169)),
                     )),
+                    SizedBox(height: 12,),
                   GestureDetector(
                     onTap: ()async{
+                      
                       bool isSuccess=await googleSignIn().SignInWithGoogle();
                       if(isSuccess==true){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>const SianaScreen()));
+                        SnackBar snackBar=SnackBar(content: Text("Valid Email"));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
-
                     },
-                    child: Card(
-                      child: Container(child: Row(children: [
-                       Image.asset("assets/google_icon.png",width: 50,height: 50,),
-                       Text("Sign In with Google",style: TextStyle(fontSize: 17),)
-                        
-                      ],)),
+                    child: Container(
+                      
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.green.shade100
                     ),
+                      child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                     Image.asset("assets/google_icon.png",width: 50,height: 50,),
+                     Text("Sign In with Google",style: TextStyle(fontSize: 17,color: Colors.blue),)
+                      
+                    ],)),
                   ),
                 SizedBox(
                   height: 20,
@@ -227,7 +236,7 @@ class _LoginFormState extends State<LoginForm> {
                   child: Card(
                     child: Container(
                       color: Colors.green.shade50,
-                      child: Text("Don't have an Account Sign Up"),
+                      child: Text("Don't have an Account Sign Up",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ),
@@ -244,7 +253,7 @@ class _LoginFormState extends State<LoginForm> {
                   child: Card(
                       child: Container(
                           color: Colors.green.shade50,
-                          child: Text("Forgot Password"))),
+                          child: Text("Forgot Password",style: TextStyle(fontSize: 18,fontWeight:FontWeight.bold ),))),
                 )
               ],
             ),

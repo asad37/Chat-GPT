@@ -164,11 +164,11 @@ class _SignUpState extends State<SignUp> {
                           borderRadius: BorderRadius.all(Radius.circular(50)))),
                 ),
                 const SizedBox(
-                  height: 13,
+                  height: 20,
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.fromLTRB(50, 15, 50, 15),
+                        padding: const EdgeInsets.fromLTRB(50, 7, 50, 7),
                         backgroundColor: Colors.green.shade50,
                         side: const BorderSide(color: Colors.blue, width: 2.5)),
                     onPressed: () async {
