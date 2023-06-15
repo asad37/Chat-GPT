@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tic_toe_game/forget_password.dart';
+import 'package:tic_toe_game/services/google_signIn.dart';
 import 'package:tic_toe_game/siana_screen.dart';
 import 'package:tic_toe_game/sign_up.dart';
 
@@ -15,7 +16,6 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   User? user;
   LoginForm(String username){}
-  @override
   // void initState() {
   //   super.initState();
   //   user=FirebaseAuth.instance.currentUser;
@@ -200,6 +200,22 @@ class _LoginFormState extends State<LoginForm> {
                           fontFamily: 'Fira Sans',
                           color: Color.fromARGB(255, 10, 98, 169)),
                     )),
+                  GestureDetector(
+                    onTap: ()async{
+                      bool isSuccess=await googleSignIn().SignInWithGoogle();
+                      if(isSuccess==true){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const SianaScreen()));
+                      }
+
+                    },
+                    child: Card(
+                      child: Container(child: Row(children: [
+                       Image.asset("assets/google_icon.png",width: 50,height: 50,),
+                       Text("Sign In with Google",style: TextStyle(fontSize: 17),)
+                        
+                      ],)),
+                    ),
+                  ),
                 SizedBox(
                   height: 20,
                 ),
