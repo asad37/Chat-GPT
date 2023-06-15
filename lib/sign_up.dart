@@ -172,8 +172,25 @@ class _SignUpState extends State<SignUp> {
                         backgroundColor: Colors.green.shade50,
                         side: const BorderSide(color: Colors.blue, width: 2.5)),
                     onPressed: () async {
+                     setData();
                      
-                      var email = emailController.text.trim();
+                    },
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'Fira Sans',
+                          color: Color.fromARGB(255, 10, 98, 169)),
+                    )),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  setData()async{
+     var email = emailController.text.trim();
                       var password = passwordController.text.trim();
                       var phone = phoneController.text.trim();
                       var username = userController.text.trim();
@@ -221,19 +238,5 @@ class _SignUpState extends State<SignUp> {
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackbar);
                       }
-                    },
-                    child: const Text(
-                      "Sign Up",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'Fira Sans',
-                          color: Color.fromARGB(255, 10, 98, 169)),
-                    )),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

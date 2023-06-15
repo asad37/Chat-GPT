@@ -79,6 +79,50 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:840521403888:android:00716a4714fe4a4d2ea135",
+        "android_client_info": {
+          "package_name": "com.example.practice_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840521403888-i190str6b2kl0rdetq4skukpn594u2vi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.practice_app",
+            "certificate_hash": "2a1e8ec4a4334c57c3a702be99ed8d034a7bd2f8"
+          }
+        },
+        {
+          "client_id": "840521403888-v18mdv1n9anp72ghj5esscdch1fmtscg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQXboZYc2bj2BGY9ECH-1haR3aW42roa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840521403888-cum85btqknl4fdgpnsvb3leehvng39bv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "840521403888-0gakjqc613hhdjthgm4qvld0cslbdchv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.asadApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:840521403888:android:4f768c52682749752ea135",
         "android_client_info": {
           "package_name": "com.example.quiz_app"
@@ -121,6 +165,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "840521403888-qvnk9an2gbhk2suhap5lui5l6b2crdle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tic_toe_game",
+            "certificate_hash": "2a1e8ec4a4334c57c3a702be99ed8d034a7bd2f8"
+          }
+        },
         {
           "client_id": "840521403888-v18mdv1n9anp72ghj5esscdch1fmtscg.apps.googleusercontent.com",
           "client_type": 3
