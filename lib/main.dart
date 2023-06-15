@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tic_toe_game/services/firebase_notification.dart';
 import 'package:tic_toe_game/siana_screen.dart';
 import 'package:tic_toe_game/splash_screen.dart';
 
@@ -11,6 +12,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Notifications().noteToken();
   runApp(const MyApp());
 }
 

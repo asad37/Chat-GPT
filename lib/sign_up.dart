@@ -131,7 +131,7 @@ class _SignUpState extends State<SignUp> {
                   height: 13,
                 ),
                 TextFormField(
-                  keyboardType:TextInputType.emailAddress,
+                  keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   decoration: const InputDecoration(
                       labelText: 'Email',
@@ -172,8 +172,7 @@ class _SignUpState extends State<SignUp> {
                         backgroundColor: Colors.green.shade50,
                         side: const BorderSide(color: Colors.blue, width: 2.5)),
                     onPressed: () async {
-                     setData();
-                     
+                      setData();
                     },
                     child: const Text(
                       "Sign Up",
@@ -189,54 +188,51 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
-  setData()async{
-     var email = emailController.text.trim();
-                      var password = passwordController.text.trim();
-                      var phone = phoneController.text.trim();
-                      var username = userController.text.trim();
-                      User? user=FirebaseAuth.instance.currentUser;
-                      try {
-                       await  FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: email, password: password);
-                            
-                               Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginForm()));
-                          print("User Authenticate");
-                           var snackbar = SnackBar(
-                          content: Text(
-                            "Sign Up Successfully",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green),
-                          ),
-                          shape: StadiumBorder(),
-                          backgroundColor: Colors.grey,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                       await FirebaseFirestore.instance.collection("Chat GPT").doc(user?.uid).set({
-                              'Username':username,
-                              'Phone':phone,
-                              'Email':email,
-                              'Password':password
-                       }) ;
-                      } on FirebaseAuthException catch (e) {
-                        print(e);
-                        var snackbar = SnackBar(
-                          content: Text(
-                            "${e.message}",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red),
-                          ),
-                          shape: StadiumBorder(),
-                          backgroundColor: Colors.green,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                      }
+
+  setData() async {
+    var email = emailController.text.trim();
+    var password = passwordController.text.trim();
+    var phone = phoneController.text.trim();
+    var username = userController.text.trim();
+    User? user = FirebaseAuth.instance.currentUser;
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LoginForm()));
+      print("User Authenticate");
+      var snackbar = SnackBar(
+        content: Text(
+          "Sign Up Successfully",
+          style: TextStyle(
+              fontSize: 17, fontWeight: FontWeight.bold, color: Colors.green),
+        ),
+        shape: StadiumBorder(),
+        backgroundColor: Colors.grey,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      await FirebaseFirestore.instance
+          .collection("Chat GPT")
+          .doc(user?.uid)
+          .set({
+        'Username': username,
+        'Phone': phone,
+        'Email': email,
+        'Password': password
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      var snackbar = SnackBar(
+        content: Text(
+          "${e.message}",
+          style: TextStyle(
+              fontSize: 17, fontWeight: FontWeight.bold, color: Colors.red),
+        ),
+        shape: StadiumBorder(),
+        backgroundColor: Colors.green,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    }
   }
 }
