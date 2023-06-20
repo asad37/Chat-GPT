@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:tic_toe_game/services/firebase_notification.dart';
 import 'package:tic_toe_game/siana_screen.dart';
 import 'package:tic_toe_game/splash_screen.dart';
@@ -32,13 +33,15 @@ class _MyAppState extends State<MyApp> {
   }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Chat GPT',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: user != null ? const SianaScreen() :const SplashScreen());
+    return OverlaySupport.global(
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Chat GPT',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: user != null ? const SianaScreen() :const SplashScreen()),
+    );
   }
 }

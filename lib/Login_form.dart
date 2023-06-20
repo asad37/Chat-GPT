@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tic_toe_game/forget_password.dart';
 import 'package:tic_toe_game/services/google_signIn.dart';
@@ -16,10 +18,14 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   User? user;
   LoginForm(String username) {}
-  // void initState() {
-  //   super.initState();
-  //   user=FirebaseAuth.instance.currentUser;
-  // }
+  void initState() {
+    super.initState();
+    InternetConnectionChecker().onStatusChange.listen((status) {
+      final connected = status == InternetConnectionStatus.connected;
+      showSimpleNotification(
+          Text(connected ? 'Connected to internet' : "No Internet"));
+    });
+  }
   TextEditingController emailContrller = TextEditingController();
   TextEditingController passwordContrller = TextEditingController();
   @override
